@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
-const API_URL: string = 'https://ecological-monitoring-lab.herokuapp.com';
+const API_URL: string = 'https://lime-wholesale-bite.glitch.me';
 
 @Injectable({
     providedIn: 'root'
@@ -11,20 +11,20 @@ export class DataBaseService {
     constructor(private http: HttpClient) {
     }
 
-    getAreas() {
-        return this.http.get(API_URL + '/areas');
+    getRivers() {
+        return this.http.get(API_URL + '/rivers');
     }
 
-    addNewArea(body: any) {
-        return this.http.post(API_URL + '/areas', body)
+    addNewRiver(body: any) {
+        return this.http.post(API_URL + '/rivers', body)
     }
 
-    deleteArea(id: number) {
-        return this.http.delete(API_URL + '/areas/' + id)
+    deleteRiver(id: number) {
+        return this.http.delete(API_URL + '/rivers/' + id)
     }
 
     saveResults(id: number, body: any) {
-        return this.http.put(API_URL + '/areas/' + id, body)
+        return this.http.put(API_URL + '/rivers/' + id, body)
     }
 }
 

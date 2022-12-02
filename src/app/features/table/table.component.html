@@ -2,151 +2,81 @@
     <table class="lr__table-container">
         <tr class="lr__table-tr tr-header">
             <th class="nowrap">№ з/п</th>
-            <th>Місто</th>
-            <th>Назва забруднюючої речовини</th>
-            <!-- EMISSION -->
-            <th>Концентрація речовини в амтосферному повітрі <br/> (Ca) <br/> мг/куб.м</th>
-            <th>Концентрація речовини у приміщенні <br/> (Ch) <br/> мг/куб.м</th>
-            <th>Час поза приміщенням <br/> (Tout) <br/> год/доба</th>
-            <th>Час у приміщенні <br/> (Tin) <br/> год/доба</th>
-            <th>Швидкість дихання поза приміщенням <br/> (Vout) <br/> куб.м/год</th>
-            <th>Швидкість дихання у приміщенні <br/> (Vin) <br/> куб.м/год</th>
-            <th>Частота впливу <br/> (EF) <br/> днів/рік</th>
-            <th>Тривалість впливу <br/> (ED) <br/> років</th>
-            <th>Маса тіла <br/> (BW) <br/> кг</th>
-            <th>Період осереднення ексопиззиції <br/> (AT) <br/> років</th>
-            <th>Середня концентрація <br/> (AC) <br/> мг/куб.м</th>
-            <th>Рефернтра концентрація <br/> (RfC) <br/> мг/куб.м</th>
-            <th>Фактор нахилу <br/> (SF) <br/> мг/(кг * доба)</th>
-            <th>Чисельність популяції <br/> (POP)</th>
-            <!-- CALCULATED -->
-            <th>Середня добова доза <br/> (LADD)</th>
-            <th>Коефіціент ризику розвитку неканцерогенних ефектів <br/> (HQ)</th>
-            <th>Сума HQ всіх забруднювачів <br/> (HI)</th>
-            <th>Індивідуальний канцерогенний ризик <br/> (CR)</th>
-            <th>Індивідуальний популяційний ризик <br/> (PCR)</th>
+            <th>Річка</th>
+            <th>Тип ризику</th>
+            <th>Назва речовини</th>
+            <th>Детальна інформація</th>
+            <th>Ризик</th>
         </tr>
         <tr *ngIf="loading" class="lr__table-tr loading">
             <th colspan="7">Loading...</th>
         </tr>
-        <ng-container *ngFor="let area of areas; let j = index">
-            <tr class="lr__table-tr loading" *ngFor="let info of area['emissions_info']; let i = index">
-                <!-- Info -->
-                <td class="lr__table-td" *ngIf="i== 0" [attr.rowspan]="area['emissions_info'].length">
-                    {{area.id + 1}}
+        <ng-container *ngFor="let river of rivers; let j = index">
+            <tr class="lr__table-tr loading" *ngFor="let risk of river['risks']; let i = index">
+                <td class="lr__table-td" *ngIf="i== 0" [attr.rowspan]="river['risks'].length">
+                    {{river.id + 1}}
                     <div class="lr__table-td-controls">
-                        <button (click)="onDelete(area.id)" class="delete">
+                        <button (click)="onDelete(river.id)" class="delete">
                             <mat-icon>clear</mat-icon>
                         </button>
-                        <button *ngIf="!area.isEditing" (click)="toggleObjectEdit(j)" class="edit">
+                        <button *ngIf="!river.isEditing" (click)="toggleObjectEdit(j)" class="edit">
                             <mat-icon>mode_edit</mat-icon>
                         </button>
-                        <button *ngIf="area.isEditing" (click)="saveEditObject(j)" class="save">
+                        <button *ngIf="river.isEditing" (click)="saveEditObject(j)" class="save">
                             <mat-icon>done</mat-icon>
                         </button>
                     </div>
                 </td>
-                <td class="lr__table-td name" *ngIf="i===0" [attr.rowspan]="area['emissions_info'].length">
-                    <span *ngIf="!area.isEditing">{{area.name}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j].name">
-                    <a href="{{area['additional_information'].url}}">{{area['additional_information'].year}}</a>
+                <td class="lr__table-td name" *ngIf="i===0" [attr.rowspan]="river['risks'].length">
+                    <span *ngIf="!river.isEditing">{{river.name}}</span>
+                    <input *ngIf="river.isEditing" type="text"
+                           [(ngModel)]="rivers[j].name">
+                    <a href="{{river['additional_information'].url}}"
+                       *ngIf="river['additional_information']">{{river['additional_information'].year}}</a>
                 </td>
                 <td>
-                    <span *ngIf="!area.isEditing">{{info['pollutant_name']}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['pollutant_name']">
-                </td>
-                <!-- Emission -->
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.Ca}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['Ca']">
+                    <span>{{riskTypes[risk['type']]}}</span>
                 </td>
                 <td>
-                    <span *ngIf="!area.isEditing">{{info.Ch}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['Ch']">
+                    <span>{{risk['emission_name'] || '—————'}}</span>
                 </td>
                 <td>
-                    <span *ngIf="!area.isEditing">{{info.Tout}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['Tout']">
+                    <span class="show" *ngIf="!risk['show']" (click)="onShowClick(risk)">....</span>
+                    <ul *ngIf="risk['show']">
+                        <li *ngIf="risk['pH']">{{riskProperties['pH']}} : {{risk['pH']}}</li>
+                        <li *ngIf="risk['F']">{{riskProperties['F']}} : {{risk['F']}}</li>
+                        <li *ngIf="risk['C'] && risk['type'] === 'B' ">{{riskProperties['C']}} : {{risk['C']}}</li>
+                        <li *ngIf="risk['AT']">{{riskProperties['AT']}} : {{risk['AT']}}</li>
+                        <li *ngIf="risk['BW']">{{riskProperties['BW']}} : {{risk['BW']}}</li>
+                        <li *ngIf="risk['CW']">{{riskProperties['CW']}} : {{risk['CW']}}</li>
+                        <li *ngIf="risk['ED']">{{riskProperties['ED']}} : {{risk['ED']}}</li>
+                        <li *ngIf="risk['EF']">{{riskProperties['EF']}} : {{risk['EF']}}</li>
+                        <li *ngIf="risk['GDK']">{{riskProperties['GDK']}} : {{risk['GDK']}}</li>
+                        <li *ngIf="risk['IR']">{{riskProperties['IR']}} : {{risk['IR']}}</li>
+                        <li *ngIf="risk['K3']">{{riskProperties['K3']}} : {{risk['K3']}}</li>
+                        <li *ngIf="risk['OSF']">{{riskProperties['OSF']}} : {{risk['OSF']}}</li>
+                        <li *ngIf="risk['C'] && risk['type'] === 'E'">{{riskProperties['C1']}} : {{risk['C']}}</li>
+                        <li *ngIf="risk['X1']">{{riskProperties['X1']}} : {{risk['X1']}}</li>
+                        <li *ngIf="risk['X2']">{{riskProperties['X2']}} : {{risk['X2']}}</li>
+                        <li *ngIf="risk['X3']">{{riskProperties['X3']}} : {{risk['X3']}}</li>
+                    </ul>
                 </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.Tin}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['Tin']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.Vout}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['Vout']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.Vin}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['Vin']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.EF}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['EF']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.ED}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['ED']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.BW}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['BW']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.AT}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['AT']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.AC}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['AC']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.RfC}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['RfC']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{info.SF}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['emissions_info'][i]['SF']">
-                </td>
-                <td>
-                    <span *ngIf="!area.isEditing">{{area.POP}}</span>
-                    <input *ngIf="area.isEditing" type="text"
-                           [(ngModel)]="areas[j]['POP']">
-                </td>
-                <!-- Calculated -->
-                <td class="nowrap">
-                    {{info.LADD || ' '}}
-                </td>
-                <td class="nowrap">
-                    {{info.HQ ? info.HQ.toFixed(3) : ' '}}
-                </td>
-                <td *ngIf="i===0" [attr.rowspan]="area['emissions_info'].length" class="nowrap">
-                    {{area.HI ? area.HI.toFixed(3) : ' '}}
-                </td>
-                <td class="nowrap">
-                    {{info.CR || ' '}}
-                </td>
-                <td class="nowrap">
-                    {{info.PCR ? info.PCR.toFixed(3) : ' '}}
+                <td [class]="{'min' : risk['risk'] && risk['risk'] < 0.1, 'ghe' : risk['risk'] >= 0.1 , 'vhe' : risk['risk'] >= 0.2, 'vge' : risk['risk'] >= 0.6, 'ce' : risk['risk'] >= 0.9  }">
+                    <span>{{risk['risk']}}</span>
                 </td>
             </tr>
         </ng-container>
     </table>
+    <div class="lr__table-information">
+        <span>Рівні ризику:</span>
+        <ul>
+            <li class="min">: <0.1 <span>(Рівні мінімального ризику)</span></li>
+            <li class="ghe">: 0.1 - 0.19 <span>(Граничні хронічні ефекти)</span></li>
+            <li class="vhe">: 0.2 - 0.59 <span>(Важкі хронічні ефекти)</span></li>
+            <li class="vge">: 0.6 - 0.89 <span>(Важкі гострі ефекти)</span></li>
+            <li class="ce">: 0.9 - 1.0 <span>(Смертельні ефекти)</span></li>
+        </ul>
+    </div>
     <div class="lr__table-control">
         <button class="lr__table-button" [disabled]="isChecked" (click)="calculateRisks()">
             Обрахувати ризики
