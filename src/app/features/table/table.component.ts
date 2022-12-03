@@ -138,13 +138,13 @@ export class TableComponent implements OnInit {
                     const {OSF, GDK, K3, CW, IR, EF, ED, BW, AT} = risk
                     risk.LADD = CW * IR * EF * (ED / BW) * AT;
                     risk.Clim = GDK * K3;
-                    risk.risk = 1 - Math.exp(Math.log10(OSF) / risk.Clim) * risk.LADD;
+                    risk.risk = 1 - Math.exp(Math.log(OSF) / risk.Clim * risk.LADD);
                 } else if (risk.type === "D") {
                     const {X1, X2, X3} = risk
                     risk.risk = 2.894 - 2.94 * Math.pow(10, -5) * X1 + 7.93 * Math.pow(10, -4) * X2 + 2.77 * Math.pow(10, -4) * X3;
                 } else if (risk.type === "E") {
                     const {OSF, GDK, K3, C} = risk
-                    risk.risk = 1 - Math.exp(Math.log10(OSF) / (GDK * K3 * 4)) * C;
+                    risk.risk = 1 - Math.exp(Math.log(OSF) / (GDK * K3 * 4) * C);
                 }
 
                 risk.risk = risk.risk.toFixed(3);
