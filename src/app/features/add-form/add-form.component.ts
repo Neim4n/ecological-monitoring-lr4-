@@ -12,61 +12,80 @@ export class AddFormComponent implements OnInit {
 
     form: any = {
         name: null,
-        type: null,
-        additional_information: {
-            year: null,
-            url: null
+        risks : {
+            type: null,
+            risk: null
         }
     }
 
     onChangeTypeSelect() {
-        this.form.emissions_info.tax_rates = null;
-        delete this.form.pH;
-        delete this.form.emissions_info.position_rate;
-        delete this.form.emissions_info.water_atmosphere_rate;
-        delete this.form.emissions_info.emissions_radioactive_type;
-        delete this.form.emissions_info.number_of_quarters;
-        delete this.form.emissions_info.rv_rate;
-        delete this.form.emissions_info.rns_rate;
-        delete this.form.emissions_info.c1v_rate;
-        delete this.form.emissions_info.c1ns_rate;
-        delete this.form.emissions_info.c2v_rate;
-        delete this.form.emissions_info.c2ns_rate
-        delete this.form.emissions_info.V1v_rate;
-        delete this.form.emissions_info.V1ns_rate;
-        delete this.form.emissions_info.V2v_rate;
-        delete this.form.emissions_info.V2ns_rate;
-        delete this.form.emissions_info.On;
+        //a
+        delete this.form.risks.pH;
+        //b
+        delete this.form.risks.F;
+        delete this.form.risks.C;
 
-        console.log(this.form.emissions_info.emissions_type);
-        switch (this.form.type) {
-            case ('1'):
-                this.form.pH = null;
+        delete this.form.risks.Prob;
+        //c
+        delete this.form.risks.OSF;
+        delete this.form.risks.GDK;
+        delete this.form.risks.K3;
+        delete this.form.risks.CW;
+        delete this.form.risks.IR;
+        delete this.form.risks.EF;
+        delete this.form.risks.ED;
+        delete this.form.risks.BW;
+        delete this.form.risks.AT;
+        delete this.form.risks.Clim;
+        delete this.form.risks.LADD;
+
+        //d
+        delete this.form.risks.X1;
+        delete this.form.risks.X2;
+        delete this.form.risks.X3;
+
+        //e
+        delete this.form.risks.OSF;
+        delete this.form.risks.GDK;
+        delete this.form.risks.K3;
+        delete this.form.risks.C;
+
+
+
+        console.log(this.form.risks.type);
+        switch (this.form.risks.type) {
+            case ('A'):
+                this.form.risks.pH  = null;
+                this.form.risks.Prob = null;
                 break
-            case ('2'):
-                this.form.pH = null;
+            case ('B'):
+                this.form.risks.F = null;
+                this.form.risks.C = null;
+                this.form.risks.Prob = null;
                 break;
-            case ('3'):
-                this.form.emissions_info.position_rate = null;
-                this.form.emissions_info.water_atmosphere_rate = null;
+            case ('C'):
+                this.form.risks.OSF = null;
+                this.form.risks.GDK = null;
+                this.form.risks.K3 = null;
+                this.form.risks.CW = null;
+                this.form.risks.IR = null;
+                this.form.risks.EF = null;
+                this.form.risks.ED = null;
+                this.form.risks.BW = null;
+                this.form.risks.AT = null;
+                this.form.risks.Clim = null;
+                this.form.risks.LADD = null;
                 break;
-            case ('4'):
-                this.form.emissions_info.tax_rates = 0.0127;
-                this.form.emissions_info.rv_rate = 50;
-                this.form.emissions_info.rns_rate = 2;
-                this.form.emissions_info.c1v = null;
-                this.form.emissions_info.c1ns = null;
-                this.form.emissions_info.c2v = null;
-                this.form.emissions_info.c2ns = null;
-                this.form.emissions_info.V1v = null;
-                this.form.emissions_info.V1ns = null;
-                this.form.emissions_info.V2v = null;
-                this.form.emissions_info.V2ns = null;
-                this.form.emissions_info.On = null;
+            case ('D'):
+                this.form.risks.X1 = null;
+                this.form.risks.X2 = null;
+                this.form.risks.X3 = null;
                 break;
-            case ('5'):
-                this.form.emissions_info.emissions_radioactive_type = null;
-                this.form.emissions_info.number_of_quarters = null;
+            case ('E'):
+                this.form.risks.OSF = null;
+                this.form.risks.GDK = null;
+                this.form.risks.K3 = null;
+                this.form.risks.C = null;
                 break;
             default:
                 break;
@@ -85,7 +104,7 @@ export class AddFormComponent implements OnInit {
         console.log(this.form);
         if (this.formControl.form.valid) {
 
-            this.form.emissions_info = [this.form.emissions_info];
+            this.form.risks = [this.form.risks];
 
             this.dataBaseService.addNewRiver(this.form)
                 .subscribe((res: any) => console.log(res),
@@ -94,31 +113,9 @@ export class AddFormComponent implements OnInit {
                         this.formControl.form.reset();
                         this.form = {
                             name: null,
-                            POP: null,
-                            HI: null,
-                            emissions_info: {
-                                pollutant_name: null,
-                                LADD: null,
-                                Tout: null,
-                                Vout: null,
-                                Tin: null,
-                                Vin: null,
-                                BW: null,
-                                AT: null,
-                                EF: null,
-                                ED: null,
-                                Ca: null,
-                                Ch: null,
-                                HQ: null,
-                                AC: null,
-                                RfC: null,
-                                CR: null,
-                                SF: null,
-                                PCR: null
-                            },
-                            additional_information: {
-                                year: null,
-                                url: null
+                            risks : {
+                                type: null,
+                                risk: null
                             }
                         }
                     });

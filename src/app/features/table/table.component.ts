@@ -141,7 +141,7 @@ export class TableComponent implements OnInit {
                     risk.risk = 1 - Math.exp(Math.log(OSF) / risk.Clim * risk.LADD);
                 } else if (risk.type === "D") {
                     const {X1, X2, X3} = risk
-                    risk.risk = 2.894 - 2.94 * Math.pow(10, -5) * X1 + 7.93 * Math.pow(10, -4) * X2 + 2.77 * Math.pow(10, -4) * X3;
+                    risk.risk = (2.894 - 2.94 * Math.pow(10, -5) * X1 + 7.93 * Math.pow(10, -4) * X2 + 2.77 * Math.pow(10, -4) * X3) / 100;
                 } else if (risk.type === "E") {
                     const {OSF, GDK, K3, C} = risk
                     risk.risk = 1 - Math.exp(Math.log(OSF) / (GDK * K3 * 4) * C);
@@ -157,8 +157,16 @@ export class TableComponent implements OnInit {
     }
 
     saveEditObject(index: number) {
-        const editGeoObject = this.rivers[index];
+        this.rivers[index].isEditing = !this.rivers[index].isEditing;
+
+        const editGeoObject = JSON.parse(JSON.stringify(this.rivers[index]));
         delete editGeoObject.isEditing;
+
+        editGeoObject.risks.forEach((r: any) => {
+            r.risk = null
+            delete r.show;
+        });
+
         this.dataBaseService.saveResults(editGeoObject.id, editGeoObject).subscribe((res) => console.log(res));
     }
 

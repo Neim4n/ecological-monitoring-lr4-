@@ -12,317 +12,173 @@
                required>
         <!-- (change)="onChangeTypeSelect()" -->
         <select class="lr__form-input lr__form-select" name="type"
-                [(ngModel)]="this.form.type"
+                [(ngModel)]="this.form.risks.type"
                 (change)="onChangeTypeSelect()"
                 required>
             <option value="null" disabled selected hidden>Вид забруднення</option>
-            <option value="1">Ризик за водневим показником</option>
-            <option value="2">Потенційний ризик за органолептичними показниками</option>
-            <option value="3">Потенційний ризик токсикологічної небезпеки питної води</option>
-            <option value="4">Потенційний ризик епідеміологічної небезпеки поверхневих вод</option>
-            <option value="5">Потенційний ризик токсикологічної небезпеки поверхневих вод</option>
+            <option value="A">Ризик за водневим показником</option>
+            <option value="B">Потенційний ризик за органолептичними показниками</option>
+            <option value="C">Потенційний ризик токсикологічної небезпеки питної води</option>
+            <option value="D">Потенційний ризик епідеміологічної небезпеки поверхневих вод</option>
+            <option value="E">Потенційний ризик токсикологічної небезпеки поверхневих вод</option>
         </select>
 
         <!-- type == 1 -->
-        <input class="lr__form-input"
-               name="ph"
-               placeholder="Водневий показник"
-               *ngIf="this.form.type === '1'"
-               type="text"
-               [(ngModel)]="this.form.pH"
-               minlength="3"
-               required>
-
+        <ng-container  *ngIf="this.form.risks.type === 'A'">
+            <input class="lr__form-input"
+                   name="ph"
+                   placeholder="Водневий показник"
+                   type="number"
+                   [(ngModel)]="this.form.risks.pH"
+                   minlength="3"
+                   required>
+        </ng-container>
 
         <!-- type == 2 -->
-        <input class="lr__form-input"
-               name="C"
-               placeholder="Забарвленість води"
-               *ngIf="this.form.type === '2'"
-               type="text"
-               [(ngModel)]="this.form.C"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="F"
-               placeholder="Природна забарвленість води"
-               *ngIf="this.form.type === '2'"
-               type="text"
-               [(ngModel)]="this.form.F"
-               minlength="3"
-               required>
+        <ng-container  *ngIf="this.form.risks.type === 'B'">
+            <input class="lr__form-input"
+                   name="C"
+                   placeholder="Забарвленість води"
+                   type="number"
+                   [(ngModel)]="this.form.risks.C"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="F"
+                   placeholder="Природна забарвленість води"
+                   type="number"
+                   [(ngModel)]="this.form.risks.F"
+                   minlength="3"
+                   required>
+        </ng-container>
+
+
 
         <!-- type == 3 -->
-        <input class="lr__form-input"
-               name="AT"
-               placeholder="Час усереднення"
-               *ngIf="this.form.type === '3'"
-               type="text"
-               [(ngModel)]="this.form.AT"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="BW"
-               placeholder="Вага"
-               *ngIf="this.form.type === '3'"
-               type="text"
-               [(ngModel)]="this.form.BW"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="CW"
-               placeholder="Розрахункова величина"
-               *ngIf="this.form.type === '3'"
-               type="text"
-               [(ngModel)]="this.form.CW"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="ED"
-               placeholder="Тривалість життя"
-               *ngIf="this.form.type === '3'"
-               type="text"
-               [(ngModel)]="this.form.ED"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="EF"
-               placeholder="Частка експозиції"
-               *ngIf="this.form.type === '3'"
-               type="text"
-               [(ngModel)]="this.form.EF"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="GDK"
-               placeholder="Норматив"
-               *ngIf="this.form.type === '3'"
-               type="text"
-               [(ngModel)]="this.form.GDK"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="IR"
-               placeholder="Рівень споживання"
-               *ngIf="this.form.type === '3'"
-               type="text"
-               [(ngModel)]="this.form.IR"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="K3"
-               placeholder="Коефіцієнт запасу"
-               *ngIf="this.form.type === '3'"
-               type="text"
-               [(ngModel)]="this.form.K3"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="OSF"
-               placeholder="Одиниця ризику"
-               *ngIf="this.form.type === '3'"
-               type="text"
-               [(ngModel)]="this.form.OSF"
-               minlength="3"
-               required>
+        <ng-container  *ngIf="this.form.risks.type === 'C'">
+            <input class="lr__form-input"
+                   name="AT"
+                   placeholder="Час усереднення"
+                   type="number"
+                   [(ngModel)]="this.form.risks.AT"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="BW"
+                   placeholder="Вага"
+                   type="number"
+                   [(ngModel)]="this.form.risks.BW"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="CW"
+                   placeholder="Розрахункова величина"
+                   type="number"
+                   [(ngModel)]="this.form.risks.CW"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="ED"
+                   placeholder="Тривалість життя"
+                   type="number"
+                   [(ngModel)]="this.form.risks.ED"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="EF"
+                   placeholder="Частка експозиції"
+                   type="number"
+                   [(ngModel)]="this.form.risks.EF"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="GDK"
+                   placeholder="Норматив"
+                   type="number"
+                   [(ngModel)]="this.form.risks.GDK"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="IR"
+                   placeholder="Рівень споживання"
+                   type="number"
+                   [(ngModel)]="this.form.risks.IR"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="K3"
+                   placeholder="Коефіцієнт запасу"
+                   type="number"
+                   [(ngModel)]="this.form.risks.K3"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="OSF"
+                   placeholder="Одиниця ризику"
+                   type="number"
+                   [(ngModel)]="this.form.risks.OSF"
+                   minlength="3"
+                   required>
+        </ng-container>
 
         <!-- type == 4 -->
-        <input class="lr__form-input"
-               name="X1"
-               placeholder="К-сть лактозо-позитивних кишкових паличок"
-               *ngIf="this.form.type === '4'"
-               type="text"
-               [(ngModel)]="this.form.X1"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="X2"
-               placeholder="Індекс ентерококів"
-               *ngIf="this.form.type === '4'"
-               type="text"
-               [(ngModel)]="this.form.X2"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="X3"
-               placeholder="Індекс коліфагів"
-               *ngIf="this.form.type === '4'"
-               type="text"
-               [(ngModel)]="this.form.X3"
-               minlength="3"
-               required>
+        <ng-container  *ngIf="this.form.risks.type === 'D'">
+            <input class="lr__form-input"
+                   name="X1"
+                   placeholder="К-сть лактозо-позитивних кишкових паличок"
+                   type="number"
+                   [(ngModel)]="this.form.risks.X1"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="X2"
+                   placeholder="Індекс ентерококів"
+                   type="number"
+                   [(ngModel)]="this.form.risks.X2"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="X3"
+                   placeholder="Індекс коліфагів"
+                   type="number"
+                   [(ngModel)]="this.form.risks.X3"
+                   minlength="3"
+                   required>
+        </ng-container>
+
 
         <!-- type == 5 -->
-        <input class="lr__form-input"
-               name="GDK"
-               placeholder="Норматив"
-               *ngIf="this.form.type === '5'"
-               type="text"
-               [(ngModel)]="this.form.GDK"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="C1"
-               placeholder="Концентрація речовини"
-               *ngIf="this.form.type === '5'"
-               type="text"
-               [(ngModel)]="this.form.C1"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="K3"
-               placeholder="Коефіцієнт запасу"
-               *ngIf="this.form.type === '5'"
-               type="text"
-               [(ngModel)]="this.form.K3"
-               minlength="3"
-               required>
-        <input class="lr__form-input"
-               name="OSF"
-               placeholder="Одиниця ризику"
-               *ngIf="this.form.type === '5'"
-               type="text"
-               [(ngModel)]="this.form.OSF"
-               minlength="3"
-               required>
+        <ng-container  *ngIf="this.form.risks.type === 'E'">
+            <input class="lr__form-input"
+                   name="GDK"
+                   placeholder="Норматив"
+                   type="number"
+                   [(ngModel)]="this.form.risks.GDK"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="C1"
+                   placeholder="Концентрація речовини"
+                   type="number"
+                   [(ngModel)]="this.form.risks.C1"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="K3"
+                   placeholder="Коефіцієнт запасу"
+                   type="number"
+                   [(ngModel)]="this.form.risks.K3"
+                   minlength="3"
+                   required>
+            <input class="lr__form-input"
+                   name="OSF"
+                   placeholder="Одиниця ризику"
+                   type="number"
+                   [(ngModel)]="this.form.risks.OSF"
+                   minlength="3"
+                   required>
+        </ng-container>
 
-
-        <!--
-        AT
-:
-25.55
-BW
-:
-70
-CW
-:
-65.5
-Clim
-:
-null
-ED
-:
-70
-EF
-:
-365
-GDK
-:
-0.04
-IR
-:
-1.2
-K3
-:
-100
-LADD
-:
-null
-OSF
-:
-0.7
-emission_name
-:
-"Сульфати"
-        -->
-
-        <!--
-        <input class="lr__form-input"
-               name="Ca"
-               placeholder="Концентрація речовини в амтосферному повітрі мг/куб.м"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.Ca"
-               required>
-        <input class="lr__form-input"
-               name="Ch"
-               placeholder="Концентрація речовини у приміщенні мг/куб.м"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.Ch"
-               required>
-        <input class="lr__form-input"
-               name="Tout"
-               placeholder="Час поза приміщенням год/доба"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.Tout"
-               required>
-        <input class="lr__form-input"
-               name="Tin"
-               placeholder="Час у приміщенні год/доба"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.Tin"
-               required>
-        <input class="lr__form-input"
-               name="Vout"
-               placeholder="Швидкість дихання поза приміщенням куб.м/год"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.Vout"
-               required>
-        <input class="lr__form-input"
-               name="Vin"
-               placeholder="Швидкість дихання у приміщенн куб.м/год"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.Vin"
-               required>
-        <input class="lr__form-input"
-               name="EF"
-               placeholder="Частота впливу днів/рік"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.EF"
-               required>
-        <input class="lr__form-input"
-               name="ED"
-               placeholder="Тривалість впливу років"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.ED"
-               required>
-        <input class="lr__form-input"
-               name="BW"
-               placeholder="Маса тіла кг"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.BW"
-               required>
-        <input class="lr__form-input"
-               name="AT"
-               placeholder="Період осереднення ексопиззиції років"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.AT"
-               required>
-        <input class="lr__form-input"
-               name="AC"
-               placeholder="Середня концентрація мг/куб.м"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.AC"
-               required>
-        <input class="lr__form-input"
-               name="RfC"
-               placeholder="Рефернтра концентрація мг/куб.м"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.RfC"
-               required>
-        <input class="lr__form-input"
-               name="SF"
-               placeholder="Фактор нахилу мг/(кг * доба)"
-               type="number"
-               [(ngModel)]="this.form.emissions_info.SF"
-               required>
-        <input class="lr__form-input"
-               name="POP"
-               placeholder="Чисельність популяції  "
-               type="number"
-               [(ngModel)]="this.form.POP"
-               required>
-
--->
-        <input class="lr__form-input"
-               name="year"
-               placeholder="Рік екологчного паспорту"
-               type="number"
-               [(ngModel)]="this.form.additional_information.year" required>
-        <input class="lr__form-input"
-               name="url"
-               placeholder="Посилання на екологічний паспорт"
-               type="text"
-               [(ngModel)]="this.form.additional_information.url" required>
         <button class="lr__form-submit" type="submit">Додати</button>
     </form>
 </div>
